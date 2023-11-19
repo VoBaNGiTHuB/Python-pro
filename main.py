@@ -1,18 +1,25 @@
-meme_dict = {
-            "КРИНЖ" : "Что-то очень странное или стыдное",
-            "ЛОЛ": "Что-то очень смешное",
-            "ЩИЩ" : "Одобрение или восторг",
-            "КРИПОВЫЙ" : "Страшный, пугающий",
-            "РОФЛ" : "Шутка",
-            "АГРИТЬСЯ" : "Злиться"
-}
-print("Привет, эта программа создана для того что бы обьяснить тебе непонятные слова из молодежного сленга,")
-for i in range(5):
-    
-    word = input("Введите непонятное слово (большими буквами!): ")
-    
-    if word in meme_dict.keys():
-        # Что делать, если слово нашлось?
-        print(meme_dict[word])
+import discord
+
+# Переменная intents - хранит привилегии бота
+intents = discord.Intents.default()
+# Включаем привелегию на чтение сообщений
+intents.message_content = True
+# Создаем бота в переменной client и передаем все привелегии
+client = discord.Client(intents=intents)
+
+@client.event
+async def on_ready():
+    print(f'We have logged in as {client.user}')
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+    if message.content.startswith('$hello'):
+        await message.channel.send("Hi!")
+    elif message.content.startswith('$bye'):
+        await message.channel.send("\\U0001f642")
     else:
-        print("Такого слова нет в списке")
+        await message.channel.send(message.content)
+
+client.run("MTE3MzI4MzMxMDg2NTIyNzgwNg.GAwRjL.QWinRFuRrz7Ek3H_MAsSJ9wPupVuuSrubHVRDc")

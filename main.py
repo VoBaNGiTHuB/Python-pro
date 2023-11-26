@@ -10,6 +10,12 @@ client = discord.Client(intents=intents)
 @client.event
 async def on_ready():
     print(f'We have logged in as {client.user}')
+@client.event
+async def on_member_join(self, member):
+    guild = member.guild
+    if guild.system_channel is not None:
+        to_send = f'Welcome {member.mention} to {guild.name}!'
+        await guild.system_channel.send(to_send)    
 
 @client.event
 async def on_message(message):
